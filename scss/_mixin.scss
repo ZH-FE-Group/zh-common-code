@@ -1,0 +1,96 @@
+// 水平竖直方向居中-translate
+@mixin center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// 文本溢出
+@mixin line-ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+%line-ellipsis {
+  @include line-ellipsis;
+}
+
+@mixin moreline-ellipsis($lineHeight: 20px, $lines: 2, $r: 255, $g: 255, $b: 255, $endColor: rgba(255, 255, 255, 1)) {
+  position: relative;
+  line-height: $lineHeight;
+  height: $lineHeight * $lines;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    font-weight: bold;
+    position: absolute;
+    background: linear-gradient(to right, rgba($r, $g, $b, 0), $endColor 90%);
+    width: 40%;
+    height: $lineHeight;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+@mixin h5-moreline-ellipsis ($lines: 2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+}
+
+@mixin clearfix {
+  *zoom: 1;
+
+  &:after {
+    content: "";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+  }
+}
+
+%clearfix {
+  @include clearfix;
+}
+
+// triangle
+%triangle-basic {
+  content: "";
+  height: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+@mixin triangle($direction, $size, $borderColor) {
+  @extend %triangle-basic;
+
+  @if $direction==top {
+    border-bottom: $size solid $borderColor;
+    border-left: $size dashed transparent;
+    border-right: $size dashed transparent;
+  }
+
+  @else if $direction==right {
+    border-left: $size solid $borderColor;
+    border-top: $size dashed transparent;
+    border-bottom: $size dashed transparent;
+  }
+
+  @else if $direction==bottom {
+    border-top: $size solid $borderColor;
+    border-left: $size dashed transparent;
+    border-right: $size dashed transparent;
+  }
+
+  @else if $direction==left {
+    border-right: $size solid $borderColor;
+    border-top: $size dashed transparent;
+    border-bottom: $size dashed transparent;
+  }
+}
